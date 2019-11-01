@@ -1,6 +1,6 @@
 # LRPopupMenu
 
-[![CI Status](https://img.shields.io/travis/huawentao/LRPopupMenu.svg?style=flat)](https://travis-ci.org/huawentao/LRPopupMenu)
+[![CI Status](https://img.shields.io/travis/huawtswork/LRPopupMenu.svg?style=flat)](https://travis-ci.org/huawtswork/LRPopupMenu)
 [![Version](https://img.shields.io/cocoapods/v/LRPopupMenu.svg?style=flat)](https://cocoapods.org/pods/LRPopupMenu)
 [![License](https://img.shields.io/cocoapods/l/LRPopupMenu.svg?style=flat)](https://cocoapods.org/pods/LRPopupMenu)
 [![Platform](https://img.shields.io/cocoapods/p/LRPopupMenu.svg?style=flat)](https://cocoapods.org/pods/LRPopupMenu)
@@ -22,7 +22,7 @@ pod 'LRPopupMenu'
 
 ## Author
 
-huawentao, huawentao@vipkid.com.cn
+huawt, ghost263sky@163.com
 
 ## License
 

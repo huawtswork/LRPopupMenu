@@ -37,11 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0ACB5A6309CB23A7DA65ECF6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		0ACB5A6309CB23A7DA65ECF6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2BD1CC8AD4D8AF7BA472CA7F /* Pods_LRPopupMenu_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LRPopupMenu_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE610F66BB2DA5877AE3B81 /* Pods_LRPopupMenu_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LRPopupMenu_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FB7D3A543C73C3C041ED4F5 /* Pods-LRPopupMenu_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LRPopupMenu_Example.debug.xcconfig"; path = "Target Support Files/Pods-LRPopupMenu_Example/Pods-LRPopupMenu_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		400A4E2D72A8EC55745F2935 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		400A4E2D72A8EC55745F2935 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5F63FB52B34173D3B8EB7075 /* Pods-LRPopupMenu_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LRPopupMenu_Tests.release.xcconfig"; path = "Target Support Files/Pods-LRPopupMenu_Tests/Pods-LRPopupMenu_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* LRPopupMenu_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LRPopupMenu_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,7 +66,7 @@
 		770A131F32EB1B0FC2F162AC /* Pods-LRPopupMenu_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LRPopupMenu_Tests.debug.xcconfig"; path = "Target Support Files/Pods-LRPopupMenu_Tests/Pods-LRPopupMenu_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		982F1F51251F38DC43F77BA9 /* Pods-LRPopupMenu_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LRPopupMenu_Example.release.xcconfig"; path = "Target Support Files/Pods-LRPopupMenu_Example/Pods-LRPopupMenu_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BB9EC2840C5D1859E254179C /* LRPopupMenu.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = LRPopupMenu.podspec; path = ../LRPopupMenu.podspec; sourceTree = "<group>"; };
+		BB9EC2840C5D1859E254179C /* LRPopupMenu.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LRPopupMenu.podspec; path = ../LRPopupMenu.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +193,6 @@
 				770A131F32EB1B0FC2F162AC /* Pods-LRPopupMenu_Tests.debug.xcconfig */,
 				5F63FB52B34173D3B8EB7075 /* Pods-LRPopupMenu_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -325,10 +325,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LRPopupMenu_Example/Pods-LRPopupMenu_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/LRPopupMenu/LRPopupMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LRPopupMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

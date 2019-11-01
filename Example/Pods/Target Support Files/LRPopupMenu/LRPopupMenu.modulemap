@@ -1,0 +1,6 @@
+framework module LRPopupMenu {
+  umbrella header "LRPopupMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}
