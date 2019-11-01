@@ -34,7 +34,7 @@
 - (IBAction)touchssss:(id)sender {
     
     NSMutableArray *titles = @[@"hahaha"].mutableCopy;
-    NSMutableArray *icons = @[@"https://vos-s.vipkid-qa.com.cn/itsystem/VHome/dev/icon/0.9/icon-code.png"].mutableCopy;
+    NSMutableArray *icons = @[@""].mutableCopy;
 
     [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
         popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
@@ -48,7 +48,7 @@
 - (void)buttonAction:(UIButton *)sender
 {
     NSMutableArray *titles = @[@"hahaha"].mutableCopy;
-    NSMutableArray *icons = @[@"https://vos-s.vipkid-qa.com.cn/itsystem/VHome/dev/icon/0.9/icon-code.png"].mutableCopy;
+    NSMutableArray *icons = @[@""].mutableCopy;
 
     [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
         popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
