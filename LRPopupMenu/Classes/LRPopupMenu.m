@@ -3,6 +3,7 @@
 #import "LRPopupMenuPath.h"
 
 #import <SDWebImage/SDWebImage.h>
+#import <Masonry/Masonry.h>
 
 #define LRScreenWidth [UIScreen mainScreen].bounds.size.width
 #define LRScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -15,6 +16,14 @@
 @interface LRPopupMenuCell : UITableViewCell
 @property (nonatomic, assign) BOOL isShowSeparator;
 @property (nonatomic, strong) UIColor * separatorColor;
+
+@property (nonatomic, strong) UIImageView *iconView;
+@property (nonatomic, strong) UILabel *titleLabel;
+
+@property (nonatomic, assign) CGSize iconSize;
+@property (nonatomic, assign) NSInteger fontSize;
+@property (nonatomic, strong) UIColor *textColor;
+
 @end
 
 @implementation LRPopupMenuCell
@@ -25,7 +34,9 @@
     if (self) {
         _isShowSeparator = YES;
         _separatorColor = [UIColor lightGrayColor];
+        _iconSize = CGSizeZero;
         [self setNeedsDisplay];
+        [self configSubViews];
     }
     return self;
 }
@@ -42,6 +53,28 @@
     [self setNeedsDisplay];
 }
 
+- (void)setFontSize:(NSInteger)fontSize
+{
+    _fontSize = fontSize;
+    self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
+}
+
+- (void)setIconSize:(CGSize)iconSize
+{
+    _iconSize = iconSize;
+    if (self.iconView.superview) {
+        [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
+        }];
+    }
+}
+
+- (void)setTextColor:(UIColor *)textColor
+{
+    _textColor = textColor;
+    self.titleLabel.textColor = _textColor ? _textColor : [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     if (!_isShowSeparator) return;
@@ -51,10 +84,94 @@
     [bezierPath closePath];
 }
 
+- (void)configSubViews
+{
+    [self.contentView addSubview:self.iconView];
+    [self.contentView addSubview:self.titleLabel];
+    
+    [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
+        make.left.equalTo(self.contentView).offset(15);
+        make.centerY.equalTo(self.contentView.mas_centerY);
+    }];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.iconView.mas_right).offset(12);
+        make.right.equalTo(self.contentView).offset(-15);
+        make.centerX.equalTo(self.contentView.mas_centerY);
+    }];
+}
+
+- (UILabel *)titleLabel
+{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = [UIFont systemFontOfSize:14];
+        _titleLabel.textColor = [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1];
+    }
+    return _titleLabel;
+}
+
+- (UIImageView *)iconView
+{
+    if (!_iconView) {
+        _iconView = [[UIImageView alloc] init];
+    }
+    return _iconView;
+}
+
+- (void)showImage:(id)image title:(id)title
+{
+    if ([title isKindOfClass:[NSAttributedString class]]) {
+        self.textLabel.attributedText = title;
+    }else{
+        self.textLabel.text = title;
+    }
+    
+    if ([image isKindOfClass:[NSString class]]) {
+        NSString *imageName = (NSString *)image;
+        if ([imageName hasPrefix:@"http"]) {
+            [self.iconView sd_setImageWithURL:[NSURL URLWithString:imageName]];
+        }else{
+            self.iconView.image = [UIImage imageNamed:imageName];
+        }
+        [self resetViewLayout:YES];
+    }else if ([image isKindOfClass:[UIImage class]]){
+        self.iconView.image = image;
+        [self resetViewLayout:YES];
+    }else {
+        self.iconView.image = nil;
+        [self resetViewLayout:NO];
+    }
+}
+
+- (void)resetViewLayout:(BOOL)hasImage
+{
+    self.iconView.hidden = !hasImage;
+    if (hasImage) {
+        [self.iconView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
+            make.left.equalTo(self.contentView).offset(15);
+            make.centerY.equalTo(self.contentView.mas_centerY);
+        }];
+        [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.iconView.mas_right).offset(12);
+            make.right.equalTo(self.contentView).offset(-15);
+            make.centerX.equalTo(self.contentView.mas_centerY);
+        }];
+    }else{
+        [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.contentView).offset(15);
+            make.right.equalTo(self.contentView).offset(-15);
+            make.centerX.equalTo(self.contentView.mas_centerY);
+        }];
+    }
+}
+
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    [self.imageView sd_cancelImageLoadOperationWithKey:@"UIImageView"];
+    [self.iconView sd_cancelImageLoadOperationWithKey:@"UIImageView"];
 }
 
 @end
@@ -182,35 +299,38 @@ UITableViewDataSource
     LRPopupMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[LRPopupMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        cell.textLabel.numberOfLines = 0;
+//        cell.textLabel.numberOfLines = 0;
     }
     cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = _textColor;
-    cell.textLabel.font = [UIFont systemFontOfSize:_fontSize];
-    if ([_titles[indexPath.row] isKindOfClass:[NSAttributedString class]]) {
-        cell.textLabel.attributedText = _titles[indexPath.row];
-    }else if ([_titles[indexPath.row] isKindOfClass:[NSString class]]) {
-        cell.textLabel.text = _titles[indexPath.row];
-    }else {
-        cell.textLabel.text = nil;
-    }
-    cell.separatorColor = _separatorColor;
-    if (_images.count >= indexPath.row + 1) {
-        if ([_images[indexPath.row] isKindOfClass:[NSString class]]) {
-            NSString *imageName = _images[indexPath.row];
-            if ([imageName hasPrefix:@"http"]) {
-                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageName]];
-            }else{
-                cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
-            }
-        }else if ([_images[indexPath.row] isKindOfClass:[UIImage class]]){
-            cell.imageView.image = _images[indexPath.row];
-        }else {
-            cell.imageView.image = nil;
-        }
-    }else {
-        cell.imageView.image = nil;
-    }
+    cell.textColor = _textColor;
+    cell.fontSize = _fontSize;
+    cell.iconSize = _iconSize;
+    [cell showImage:_images[indexPath.row] title:_titles[indexPath.row]];
+
+//    if ([_titles[indexPath.row] isKindOfClass:[NSAttributedString class]]) {
+//        cell.textLabel.attributedText = _titles[indexPath.row];
+//    }else if ([_titles[indexPath.row] isKindOfClass:[NSString class]]) {
+//        cell.textLabel.text = _titles[indexPath.row];
+//    }else {
+//        cell.textLabel.text = nil;
+//    }
+//    cell.separatorColor = _separatorColor;
+//    if (_images.count >= indexPath.row + 1) {
+//        if ([_images[indexPath.row] isKindOfClass:[NSString class]]) {
+//            NSString *imageName = _images[indexPath.row];
+//            if ([imageName hasPrefix:@"http"]) {
+//                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageName]];
+//            }else{
+//                cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
+//            }
+//        }else if ([_images[indexPath.row] isKindOfClass:[UIImage class]]){
+//            cell.imageView.image = _images[indexPath.row];
+//        }else {
+//            cell.imageView.image = nil;
+//        }
+//    }else {
+//        cell.imageView.image = nil;
+//    }
     return cell;
 }
 
@@ -303,6 +423,7 @@ UITableViewDataSource
     _minSpace = 10.0;
     _maxVisibleCount = 5;
     _itemHeight = 44;
+    _iconSize = CGSizeMake(18, 18);
     _isCornerChanged = NO;
     _showMaskView = YES;
     _menuBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, LRScreenWidth, LRScreenHeight)];
@@ -483,6 +604,12 @@ UITableViewDataSource
 - (void)setOffset:(CGFloat)offset
 {
     _offset = offset;
+    [self updateUI];
+}
+
+- (void)setIconSize:(CGSize)iconSize
+{
+    _iconSize = iconSize;
     [self updateUI];
 }
 

@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LRPopupMenu'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'LRPopupMenu.'
   s.homepage         = 'https://github.com/huawtswork/LRPopupMenu'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.source_files = 'LRPopupMenu/Classes/**/*'
   s.frameworks = 'UIKit', 'Foundation'
   s.dependency 'SDWebImage'
+  s.dependency 'Masonry'
 end

@@ -102,6 +102,11 @@ typedef NS_ENUM(NSInteger , LRPopupMenuPriorityDirection) {
 @property (nonatomic, assign) CGFloat fontSize;
 
 /**
+ 设置图片大小 自定义cell时忽略 Default is (18, 18)
+ */
+@property (nonatomic, assign) CGSize iconSize;
+
+/**
  设置字体颜色 自定义cell时忽略 Default is [UIColor blackColor]
  */
 @property (nonatomic, strong) UIColor * textColor;

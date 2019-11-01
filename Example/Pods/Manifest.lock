@@ -1,6 +1,8 @@
 PODS:
   - LRPopupMenu (1.0.0):
+    - Masonry
     - SDWebImage
+  - Masonry (1.1.0)
   - SDWebImage (5.2.5):
     - SDWebImage/Core (= 5.2.5)
   - SDWebImage/Core (5.2.5)
@@ -10,6 +12,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Masonry
     - SDWebImage
 
 EXTERNAL SOURCES:
@@ -17,7 +20,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LRPopupMenu: 491366497e0df8e10a789d3ef9d947bf014f5c4f
+  LRPopupMenu: 9df530ce20c174d35629087c41d7c951778251f1
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: 4eabf2fa6695c95c47724214417a9c036c965e4a
 
 PODFILE CHECKSUM: dc420283ad7b004e5a418ab8632f46c3ef010ef2
