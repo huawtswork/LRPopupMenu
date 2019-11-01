@@ -7,6 +7,7 @@
 //
 
 #import "LRViewController.h"
+#import <LRPopupMenu/LRPopupMenu.h>
 
 @interface LRViewController ()
 
@@ -18,6 +19,44 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.view.backgroundColor = [UIColor yellowColor];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.backgroundColor = [UIColor redColor];
+    button.frame = CGRectMake(100, 100, 20, 20);
+    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
+    
+}
+
+- (IBAction)touchssss:(id)sender {
+    
+    NSMutableArray *titles = @[@"hahaha"].mutableCopy;
+    NSMutableArray *icons = @[@"https://vos-s.vipkid-qa.com.cn/itsystem/VHome/dev/icon/0.9/icon-code.png"].mutableCopy;
+
+    [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
+        popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
+        popupMenu.borderWidth = 1;
+        popupMenu.delegate = self;
+        popupMenu.fontSize = 14;
+        popupMenu.borderColor = [UIColor lightGrayColor];
+    }];
+}
+
+- (void)buttonAction:(UIButton *)sender
+{
+    NSMutableArray *titles = @[@"hahaha"].mutableCopy;
+    NSMutableArray *icons = @[@"https://vos-s.vipkid-qa.com.cn/itsystem/VHome/dev/icon/0.9/icon-code.png"].mutableCopy;
+
+    [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
+        popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
+        popupMenu.borderWidth = 1;
+        popupMenu.delegate = self;
+        popupMenu.fontSize = 14;
+        popupMenu.borderColor = [UIColor lightGrayColor];
+    }];
 }
 
 - (void)didReceiveMemoryWarning

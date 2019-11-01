@@ -10,6 +10,8 @@
 #define LRMainWindow  [UIApplication sharedApplication].keyWindow
 #define LR_SAFE_BLOCK(BlockName, ...) ({ !BlockName ? nil : BlockName(__VA_ARGS__); })
 
+static NSString * identifier = @"lrPopupMenu";
+
 #pragma mark - /////////////
 #pragma mark - private cell
 
@@ -34,7 +36,6 @@
     if (self) {
         _isShowSeparator = YES;
         _separatorColor = [UIColor lightGrayColor];
-        _iconSize = CGSizeZero;
         [self configSubViews];
         [self setNeedsDisplay];
     }
@@ -62,17 +63,12 @@
 - (void)setIconSize:(CGSize)iconSize
 {
     _iconSize = iconSize;
-    if (self.iconView.superview) {
-        [self.iconView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
-        }];
-    }
 }
 
 - (void)setTextColor:(UIColor *)textColor
 {
     _textColor = textColor;
-    self.titleLabel.textColor = _textColor ? _textColor : [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1];
+    self.titleLabel.textColor = _textColor ? _textColor : [UIColor colorWithRed:102/255.0f green:102/255.0f blue:102/255.0f alpha:1];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -86,17 +82,25 @@
 
 - (void)configSubViews
 {
+    self.backgroundColor = [UIColor clearColor];
+    
     [self.contentView addSubview:self.iconView];
     [self.contentView addSubview:self.titleLabel];
     
     [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
+        if (CGSizeEqualToSize(_iconSize, CGSizeZero)) {
+            make.width.mas_equalTo(18);
+            make.height.mas_equalTo(18);
+        }else{
+            make.width.mas_equalTo(_iconSize.width);
+            make.height.mas_equalTo(_iconSize.height);
+        }
         make.left.equalTo(self.contentView).offset(15);
         make.centerY.equalTo(self.contentView.mas_centerY);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.iconView.mas_right).offset(12);
+        make.left.equalTo(self.iconView.mas_right).offset(10);
         make.right.equalTo(self.contentView).offset(-15);
         make.centerY.equalTo(self.contentView.mas_centerY);
     }];
@@ -107,7 +111,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:14];
-        _titleLabel.textColor = [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1];
+        _titleLabel.textColor = [UIColor colorWithRed:102/255.0f green:102/255.0f blue:102/255.0f alpha:1];
     }
     return _titleLabel;
 }
@@ -116,6 +120,7 @@
 {
     if (!_iconView) {
         _iconView = [[UIImageView alloc] init];
+        _iconView.backgroundColor = [UIColor whiteColor];
     }
     return _iconView;
 }
@@ -123,9 +128,9 @@
 - (void)showImage:(id)image title:(id)title
 {
     if ([title isKindOfClass:[NSAttributedString class]]) {
-        self.textLabel.attributedText = title;
+        self.titleLabel.attributedText = title;
     }else{
-        self.textLabel.text = title;
+        self.titleLabel.text = title;
     }
     
     if ([image isKindOfClass:[NSString class]]) {
@@ -150,12 +155,18 @@
     self.iconView.hidden = !hasImage;
     if (hasImage) {
         [self.iconView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeEqualToSize(_iconSize, CGSizeZero) ? CGSizeMake(18, 18) : _iconSize);
+            if (CGSizeEqualToSize(_iconSize, CGSizeZero)) {
+                make.width.mas_equalTo(18);
+                make.height.mas_equalTo(18);
+            }else{
+                make.width.mas_equalTo(_iconSize.width);
+                make.height.mas_equalTo(_iconSize.height);
+            }
             make.left.equalTo(self.contentView).offset(15);
             make.centerY.equalTo(self.contentView.mas_centerY);
         }];
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.iconView.mas_right).offset(12);
+            make.left.equalTo(self.iconView.mas_right).offset(10);
             make.right.equalTo(self.contentView).offset(-15);
             make.centerY.equalTo(self.contentView.mas_centerY);
         }];
@@ -295,13 +306,7 @@ UITableViewDataSource
         return tableViewCell;
     }
     
-    static NSString * identifier = @"lrPopupMenu";
     LRPopupMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[LRPopupMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-//        cell.textLabel.numberOfLines = 0;
-    }
-    cell.backgroundColor = [UIColor clearColor];
     cell.textColor = _textColor;
     cell.fontSize = _fontSize;
     cell.iconSize = _iconSize;
@@ -445,6 +450,15 @@ UITableViewDataSource
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        [_tableView registerClass:[LRPopupMenuCell class] forCellReuseIdentifier:identifier];
+        
+        if (@available(iOS 11.0, *)) {
+            _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            _tableView.estimatedRowHeight = 0;
+            _tableView.estimatedSectionFooterHeight = 0;
+            _tableView.estimatedSectionHeaderHeight = 0;
+        }
     }
     return _tableView;
 }

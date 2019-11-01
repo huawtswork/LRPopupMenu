@@ -1,5 +1,5 @@
 PODS:
-  - LRPopupMenu (1.0.0):
+  - LRPopupMenu (1.0.3):
     - Masonry
     - SDWebImage
   - Masonry (1.1.0)
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LRPopupMenu: 9df530ce20c174d35629087c41d7c951778251f1
+  LRPopupMenu: 68f9d925dd4310228847c216c32ff9ff5bd27d75
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: 4eabf2fa6695c95c47724214417a9c036c965e4a
 
