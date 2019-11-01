@@ -35,8 +35,8 @@
         _isShowSeparator = YES;
         _separatorColor = [UIColor lightGrayColor];
         _iconSize = CGSizeZero;
-        [self setNeedsDisplay];
         [self configSubViews];
+        [self setNeedsDisplay];
     }
     return self;
 }
@@ -98,7 +98,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.iconView.mas_right).offset(12);
         make.right.equalTo(self.contentView).offset(-15);
-        make.centerX.equalTo(self.contentView.mas_centerY);
+        make.centerY.equalTo(self.contentView.mas_centerY);
     }];
 }
 
@@ -157,13 +157,13 @@
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.iconView.mas_right).offset(12);
             make.right.equalTo(self.contentView).offset(-15);
-            make.centerX.equalTo(self.contentView.mas_centerY);
+            make.centerY.equalTo(self.contentView.mas_centerY);
         }];
     }else{
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(15);
             make.right.equalTo(self.contentView).offset(-15);
-            make.centerX.equalTo(self.contentView.mas_centerY);
+            make.centerY.equalTo(self.contentView.mas_centerY);
         }];
     }
 }
