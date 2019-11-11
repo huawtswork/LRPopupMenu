@@ -87,6 +87,11 @@ typedef NS_ENUM(NSInteger , LRPopupMenuPriorityDirection) {
 @property (nonatomic, assign) BOOL showMaskView;
 
 /**
+ 覆盖层颜色 Default is [[UIColor blackColor] colorWithAlphaComponent:0.1]
+ */
+@property (nonatomic, strong) UIColor *maskViewColor;
+
+/**
  选择菜单项后消失 Default is YES
  */
 @property (nonatomic, assign) BOOL dismissOnSelected;

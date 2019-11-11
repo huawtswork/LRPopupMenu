@@ -484,6 +484,14 @@ UITableViewDataSource
     _menuBackView.backgroundColor = showMaskView ? [[UIColor blackColor] colorWithAlphaComponent:0.1] : [UIColor clearColor];
 }
 
+- (void)setMaskViewColor:(UIColor *)maskViewColor
+{
+    _maskViewColor = maskViewColor;
+    if (_maskViewColor) {
+        _menuBackView.backgroundColor = _maskViewColor;
+    }
+}
+
 - (void)setType:(LRPopupMenuType)type
 {
     _type = type;
