@@ -35,7 +35,7 @@ static NSString * identifier = @"lrPopupMenu";
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _isShowSeparator = YES;
-        _separatorColor = [UIColor lightGrayColor];
+        _separatorColor = [UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1];
         [self configSubViews];
         [self setNeedsDisplay];
     }
@@ -74,7 +74,7 @@ static NSString * identifier = @"lrPopupMenu";
 - (void)drawRect:(CGRect)rect
 {
     if (!_isShowSeparator) return;
-    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, rect.size.height - 0.5, rect.size.width, 0.5)];
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(15, rect.size.height - 0.5, rect.size.width - 30, 0.5)];
     [_separatorColor setFill];
     [bezierPath fillWithBlendMode:kCGBlendModeNormal alpha:1];
     [bezierPath closePath];
