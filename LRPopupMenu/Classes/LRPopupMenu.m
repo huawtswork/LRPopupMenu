@@ -139,6 +139,7 @@ static NSString * identifier = @"lrPopupMenu";
         self.iconView.image = nil;
         [self resetViewLayout:NO];
     }else{
+        
         if ([image isKindOfClass:[NSString class]]) {
             NSString *imageName = (NSString *)image;
             if ([imageName hasPrefix:@"http"]) {
@@ -155,8 +156,6 @@ static NSString * identifier = @"lrPopupMenu";
             [self resetViewLayout:NO];
         }
     }
-    
-    
 }
 
 - (void)setStyle:(LRPopupMenuStyle)style
@@ -168,6 +167,7 @@ static NSString * identifier = @"lrPopupMenu";
 {
     self.iconView.hidden = !hasImage;
     if (hasImage) {
+        self.textLabel.textAlignment = NSTextAlignmentLeft;
         [self.iconView mas_remakeConstraints:^(MASConstraintMaker *make) {
             if (CGSizeEqualToSize(_iconSize, CGSizeZero)) {
                 make.width.mas_equalTo(18);
@@ -185,6 +185,7 @@ static NSString * identifier = @"lrPopupMenu";
             make.centerY.equalTo(self.contentView.mas_centerY);
         }];
     }else{
+        self.textLabel.textAlignment = NSTextAlignmentCenter;
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(15);
             make.right.equalTo(self.contentView).offset(-15);
