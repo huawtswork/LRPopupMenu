@@ -167,7 +167,7 @@ static NSString * identifier = @"lrPopupMenu";
 {
     self.iconView.hidden = !hasImage;
     if (hasImage) {
-        self.textLabel.textAlignment = NSTextAlignmentLeft;
+        self.titleLabel.textAlignment = NSTextAlignmentLeft;
         [self.iconView mas_remakeConstraints:^(MASConstraintMaker *make) {
             if (CGSizeEqualToSize(_iconSize, CGSizeZero)) {
                 make.width.mas_equalTo(18);
@@ -185,7 +185,7 @@ static NSString * identifier = @"lrPopupMenu";
             make.centerY.equalTo(self.contentView.mas_centerY);
         }];
     }else{
-        self.textLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(15);
             make.right.equalTo(self.contentView).offset(-15);
