@@ -26,6 +26,8 @@ static NSString * identifier = @"lrPopupMenu";
 @property (nonatomic, assign) NSInteger fontSize;
 @property (nonatomic, strong) UIColor *textColor;
 
+@property (nonatomic, assign) LRPopupMenuStyle style;
+
 @end
 
 @implementation LRPopupMenuCell
@@ -133,21 +135,33 @@ static NSString * identifier = @"lrPopupMenu";
         self.titleLabel.text = title;
     }
     
-    if ([image isKindOfClass:[NSString class]]) {
-        NSString *imageName = (NSString *)image;
-        if ([imageName hasPrefix:@"http"]) {
-            [self.iconView sd_setImageWithURL:[NSURL URLWithString:imageName]];
-        }else{
-            self.iconView.image = [UIImage imageNamed:imageName];
-        }
-        [self resetViewLayout:YES];
-    }else if ([image isKindOfClass:[UIImage class]]){
-        self.iconView.image = image;
-        [self resetViewLayout:YES];
-    }else {
+    if (self.style == LRPopupMenuStyle_TextOnly) {
         self.iconView.image = nil;
         [self resetViewLayout:NO];
+    }else{
+        if ([image isKindOfClass:[NSString class]]) {
+            NSString *imageName = (NSString *)image;
+            if ([imageName hasPrefix:@"http"]) {
+                [self.iconView sd_setImageWithURL:[NSURL URLWithString:imageName]];
+            }else{
+                self.iconView.image = [UIImage imageNamed:imageName];
+            }
+            [self resetViewLayout:YES];
+        }else if ([image isKindOfClass:[UIImage class]]){
+            self.iconView.image = image;
+            [self resetViewLayout:YES];
+        }else {
+            self.iconView.image = nil;
+            [self resetViewLayout:NO];
+        }
     }
+    
+    
+}
+
+- (void)setStyle:(LRPopupMenuStyle)style
+{
+    _style = style;
 }
 
 - (void)resetViewLayout:(BOOL)hasImage
@@ -310,32 +324,22 @@ UITableViewDataSource
     cell.textColor = _textColor;
     cell.fontSize = _fontSize;
     cell.iconSize = _iconSize;
-    [cell showImage:_images[indexPath.row] title:_titles[indexPath.row]];
+    cell.style = self.style;
+    switch (self.style) {
+        case LRPopupMenuStyle_Default: {
+            [cell showImage:_images[indexPath.row] title:_titles[indexPath.row]];
+        }break;
+        case LRPopupMenuStyle_TextOnly: {
+            [cell showImage:nil title:_titles[indexPath.row]];
+        }break;
+        case LRPopupMenuStyle_ImageOnly: {
+            [cell showImage:_images[indexPath.row] title:nil];
+        }break;
+        default:
+            break;
+    }
+   
 
-//    if ([_titles[indexPath.row] isKindOfClass:[NSAttributedString class]]) {
-//        cell.textLabel.attributedText = _titles[indexPath.row];
-//    }else if ([_titles[indexPath.row] isKindOfClass:[NSString class]]) {
-//        cell.textLabel.text = _titles[indexPath.row];
-//    }else {
-//        cell.textLabel.text = nil;
-//    }
-//    cell.separatorColor = _separatorColor;
-//    if (_images.count >= indexPath.row + 1) {
-//        if ([_images[indexPath.row] isKindOfClass:[NSString class]]) {
-//            NSString *imageName = _images[indexPath.row];
-//            if ([imageName hasPrefix:@"http"]) {
-//                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imageName]];
-//            }else{
-//                cell.imageView.image = [UIImage imageNamed:_images[indexPath.row]];
-//            }
-//        }else if ([_images[indexPath.row] isKindOfClass:[UIImage class]]){
-//            cell.imageView.image = _images[indexPath.row];
-//        }else {
-//            cell.imageView.image = nil;
-//        }
-//    }else {
-//        cell.imageView.image = nil;
-//    }
     return cell;
 }
 
@@ -514,6 +518,14 @@ UITableViewDataSource
     }
     [self updateUI];
 }
+
+- (void)setStyle:(LRPopupMenuStyle)style
+{
+    _style = style;
+    
+    [self updateUI];
+}
+
 
 - (void)setFontSize:(CGFloat)fontSize
 {

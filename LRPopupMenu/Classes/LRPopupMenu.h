@@ -10,6 +10,12 @@ typedef NS_ENUM(NSInteger , LRPopupMenuType) {
     LRPopupMenuTypeDark
 };
 
+typedef NS_OPTIONS(NSInteger, LRPopupMenuStyle) {
+    LRPopupMenuStyle_Default = 0,
+    LRPopupMenuStyle_TextOnly = 1,
+    LRPopupMenuStyle_ImageOnly = 2,
+};
+
 /**
  箭头方向优先级
 
@@ -188,6 +194,11 @@ typedef NS_ENUM(NSInteger , LRPopupMenuPriorityDirection) {
  设置显示模式 自定义cell时忽略 Default is LRPopupMenuTypeDefault
  */
 @property (nonatomic, assign) LRPopupMenuType type;
+
+/**
+ 设置显示风格 自定义cell时忽略 Default is LRPopupMenuStyle_Default
+ */
+@property (nonatomic, assign) LRPopupMenuStyle style;
 
 /**
  代理
