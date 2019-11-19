@@ -355,12 +355,12 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (_dismissOnSelected) [self dismiss];
-//
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(lrPopupMenu:didSelectedAtIndex:)]) {
-//        [self.delegate lrPopupMenu:self didSelectedAtIndex:indexPath.row];
-//    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (_dismissOnSelected) [self dismiss];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(lrPopupMenu:didSelectedAtIndex:)]) {
+        [self.delegate lrPopupMenu:self didSelectedAtIndex:indexPath.row];
+    }
 }
 
 #pragma mark - scrollViewDelegate
