@@ -340,7 +340,11 @@ UITableViewDataSource
             break;
     }
    
-
+   UIView *view_bg = [[UIView alloc]initWithFrame:cell.frame];
+    view_bg.layer.cornerRadius = 5.0;
+    view_bg.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+     cell.selectedBackgroundView = view_bg;
+    
     return cell;
 }
 
@@ -351,12 +355,12 @@ UITableViewDataSource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (_dismissOnSelected) [self dismiss];
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(lrPopupMenu:didSelectedAtIndex:)]) {
-        [self.delegate lrPopupMenu:self didSelectedAtIndex:indexPath.row];
-    }
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    if (_dismissOnSelected) [self dismiss];
+//
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(lrPopupMenu:didSelectedAtIndex:)]) {
+//        [self.delegate lrPopupMenu:self didSelectedAtIndex:indexPath.row];
+//    }
 }
 
 #pragma mark - scrollViewDelegate

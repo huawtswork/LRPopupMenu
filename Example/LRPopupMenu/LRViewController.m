@@ -33,8 +33,8 @@
 
 - (IBAction)touchssss:(id)sender {
     
-    NSMutableArray *titles = @[@"hahaha"].mutableCopy;
-    NSMutableArray *icons = @[@""].mutableCopy;
+    NSMutableArray *titles = @[@"hahaha", @"hahaha"].mutableCopy;
+    NSMutableArray *icons = @[@"", @""].mutableCopy;
 
     [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
         popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
@@ -42,13 +42,14 @@
         popupMenu.delegate = self;
         popupMenu.fontSize = 14;
         popupMenu.borderColor = [UIColor lightGrayColor];
+        popupMenu.style = LRPopupMenuStyle_TextOnly;
     }];
 }
 
 - (void)buttonAction:(UIButton *)sender
 {
-    NSMutableArray *titles = @[@"hahaha"].mutableCopy;
-    NSMutableArray *icons = @[@""].mutableCopy;
+    NSMutableArray *titles = @[@"hahaha", @"hahaha"].mutableCopy;
+    NSMutableArray *icons = @[@"", @""].mutableCopy;
 
     [LRPopupMenu showRelyOnView:sender titles:titles icons:icons menuWidth:140 otherSettings:^(LRPopupMenu *popupMenu) {
         popupMenu.priorityDirection = LRPopupMenuPriorityDirectionTop;
@@ -56,6 +57,7 @@
         popupMenu.delegate = self;
         popupMenu.fontSize = 14;
         popupMenu.borderColor = [UIColor lightGrayColor];
+        popupMenu.style = LRPopupMenuStyle_TextOnly;
     }];
 }
 
